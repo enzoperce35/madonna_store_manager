@@ -1,0 +1,1 @@
+Sales and Inventory manager app for Madonna Delicacies
