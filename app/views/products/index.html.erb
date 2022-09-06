@@ -1,0 +1,7 @@
+<div style="float: right;">
+  <%= link_to 'add product', new_product_path, method: 'get' %>
+</div>
+
+<% @products.each do | product | %>
+  <%= link_to product.name, product_path( product ), method: 'get' %><br>
+<% end %>
