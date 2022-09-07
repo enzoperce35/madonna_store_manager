@@ -5,17 +5,20 @@
   </div>
 
   <ul class='nav-menu'>
+    <ul>
     <% if user_is_app_manager %>
       <%= render 'layouts/burger_nav_links/app_manager_links' %>
     <% elsif user_is_general_manager %>
       
     <% elsif user_is_store_manager %>
-      
+      <%= render 'layouts/burger_nav_links/store_manager_links' %>
     <% elsif user_is_not_admin %>
       
     <% end %>
-
+   </ul>
     
-    <%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %>
+    <ul>
+      <%= link_to 'Sign out', destroy_user_session_path, method: 'delete' %>
+    </ul>
   </ul>
 </div>
