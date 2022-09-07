@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
     t.string "name"
     t.string "item_type"
     t.string "unit"
+    t.boolean "sale_deduction", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

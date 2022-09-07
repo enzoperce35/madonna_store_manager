@@ -4,6 +4,7 @@ class CreateInventoryItems < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :item_type
       t.string :unit
+      t.boolean :sale_deduction, default: false
       
       t.timestamps
     end

@@ -4,5 +4,5 @@ Rails.application.routes.draw do
 
   post 'users/user_branch/:id', to: 'users#user_branch', as: 'user_branch'
 
-  resources :products
+  resources :products, :inventory_items
 end
