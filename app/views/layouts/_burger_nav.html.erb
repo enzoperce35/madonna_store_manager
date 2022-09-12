@@ -9,7 +9,7 @@
     <% if user_is_app_manager %>
       <%= render 'layouts/burger_nav_links/app_manager_links' %>
     <% elsif user_is_general_manager %>
-      
+      <%= render 'layouts/burger_nav_links/general_manager_links' %>
     <% elsif user_is_store_manager %>
       <%= render 'layouts/burger_nav_links/store_manager_links' %>
     <% elsif user_is_not_admin %>

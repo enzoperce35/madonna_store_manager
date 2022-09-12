@@ -16,15 +16,26 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
   enable_extension "plpgsql"
 
   create_table "branch_inventories", force: :cascade do |t|
+    t.datetime "opening_inventory"
+    t.float "inventory_stock", default: 0.0
     t.bigint "branch_id"
     t.bigint "inventory_item_id"
-    t.float "margin"
-    t.float "stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["branch_id", "inventory_item_id"], name: "index_branch_inventories_on_branch_id_and_inventory_item_id", unique: true
     t.index ["branch_id"], name: "index_branch_inventories_on_branch_id"
     t.index ["inventory_item_id"], name: "index_branch_inventories_on_inventory_item_id"
+  end
+
+  create_table "branch_premade_items", force: :cascade do |t|
+    t.float "unit_count"
+    t.bigint "branch_id"
+    t.bigint "premade_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["branch_id", "premade_item_id"], name: "index_branch_premade_items_on_branch_id_and_premade_item_id", unique: true
+    t.index ["branch_id"], name: "index_branch_premade_items_on_branch_id"
+    t.index ["premade_item_id"], name: "index_branch_premade_items_on_premade_item_id"
   end
 
   create_table "branch_products", force: :cascade do |t|
@@ -60,6 +71,15 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "premade_items", force: :cascade do |t|
+    t.string "name"
+    t.string "item_type"
+    t.string "unit"
+    t.boolean "sale_deduction", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -80,6 +100,8 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
 
   add_foreign_key "branch_inventories", "branches"
   add_foreign_key "branch_inventories", "inventory_items"
+  add_foreign_key "branch_premade_items", "branches"
+  add_foreign_key "branch_premade_items", "premade_items"
   add_foreign_key "branch_products", "branches"
   add_foreign_key "branch_products", "products"
 end

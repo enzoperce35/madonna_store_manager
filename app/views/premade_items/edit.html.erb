@@ -1,4 +1,7 @@
-<h3>Add Inventory item</h3><br>
+<h3>
+  Edit Premade Item
+  <%= link_to '[x]', premade_item_path( @item ), method: 'delete', data: { confirm: 'Are you sure you want to delete this item?' } %>
+</h3><br>
 
 <%= simple_form_for @item do |f| %>
   <p>
@@ -32,6 +35,6 @@
   </p>
 
   <p style="float:right">
-    <%= f.submit "Add Item" %>
+    <%= f.submit "Edit Item" %>
   </p>
 <% end %>
