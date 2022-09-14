@@ -1,0 +1,40 @@
+<table class = 'table'>
+
+  <caption id='caption'>
+    <%= @branch.name %> Products
+    <hr>
+  </caption>
+  
+  <thead>
+    <tr>
+      <th>
+        Product
+        <%= link_to "\u{ 1D11A }".encode( 'utf-8' ), branch_products_path( list: true ), method: 'get' %>
+      </th>
+      
+      <th>Price</th>
+      
+      <th>Category</th>
+    </tr>
+  </thead>
+  
+  <% @branch_products.each do | join | %>
+    <% product = Product.find( join.product_id ) %>
+  
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to product.name, edit_branch_product_path( join ), method: 'get' %>
+        </td>
+
+        <td>
+          <%= join.price %>
+        </td>
+        
+        <td>
+          <%= join.category %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

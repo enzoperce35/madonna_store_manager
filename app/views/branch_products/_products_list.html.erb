@@ -1,0 +1,16 @@
+<h3><%= @branch.name %> Products</h3>
+
+<%= simple_form_for :branch_product, url: branch_products_update_path( @branch ), method: 'put' do |f| %>
+  <p>
+    <%= f.collection_check_boxes( :product_ids, @products, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | prod | %>
+      <div class="form-check">
+        <%= prod.check_box( class: "form-check-input", checked: @branch.products.pluck( :name ).include?( prod.object.name ) ) %>
+        <%= prod.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
+  </p>
+
+  <p style="float:right">
+    <%= f.submit "Update Branch Products" %>
+  </p>
+<% end %><br><br>

@@ -83,6 +83,15 @@
   transform: translateY(-8px) rotate(-45deg);
 }
 
+// vertical align checkboxes
 .checkbox_container {
   display: block;
+}
+
+// table captions
+.table {
+  caption-side: top;
+  #caption {
+    text-align: right;
+  }
 }
