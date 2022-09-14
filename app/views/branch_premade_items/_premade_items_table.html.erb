@@ -1,0 +1,34 @@
+<table class = 'table'>
+
+  <caption id='caption'>
+    <%= @branch.name %> Premade Items
+    <hr>
+  </caption>
+  
+  <thead>
+    <tr>
+      <th>
+        Items
+        <%= link_to "\u{ 1D11A }".encode( 'utf-8' ), branch_premade_items_path( list: true ), method: 'get' %>
+      </th>
+      
+      <th>Stock</th>
+    </tr>
+  </thead>
+  
+  <% @branch_items.each do | join | %>
+    <% item = PremadeItem.find( join.premade_item_id ) %>
+  
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to item.name, edit_branch_premade_item_path( join ), method: 'get' %>
+        </td>
+
+        <td>
+          <%= join.unit_count %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

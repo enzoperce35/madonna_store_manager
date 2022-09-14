@@ -1,10 +1,10 @@
 <h3><%= @branch.name %> Premade Items</h3>
 
-<%= simple_form_for @branch, url: branch_premade_items_update_path( @branch ), method:'post' do |f| %>
+<%= simple_form_for :branch_premade_item, url: branch_premade_items_update_path( @branch ), method:'put' do |f| %>
   <p>
     <%= f.collection_check_boxes( :premade_item_ids, @items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
       <div class="form-check">
-        <%= item.check_box( class: "form-check-input", checked: @active_items.include?( item.object.name ) ) %>
+        <%= item.check_box( class: "form-check-input", checked: @branch.premade_items.pluck( :name ).include?( item.object.name ) ) %>
         <%= item.label( class: "form-check-label" ) %>
       </div>
     <% end %>
