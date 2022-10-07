@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_03_075329) do
+ActiveRecord::Schema.define(version: 2022_09_14_222130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,23 +65,66 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
   create_table "inventory_items", force: :cascade do |t|
     t.string "name"
     t.string "item_type"
+    t.float "item_quantity"
     t.string "unit"
-    t.boolean "sale_deduction", default: false
+    t.text "unit_note"
+    t.float "market_price"
+    t.float "stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "premade_inventory_items", force: :cascade do |t|
+    t.string "unit"
+    t.float "unit_count"
+    t.bigint "premade_item_id"
+    t.bigint "inventory_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inventory_item_id"], name: "index_premade_inventory_items_on_inventory_item_id"
+    t.index ["premade_item_id", "inventory_item_id"], name: "premade_inventory", unique: true
+    t.index ["premade_item_id"], name: "index_premade_inventory_items_on_premade_item_id"
   end
 
   create_table "premade_items", force: :cascade do |t|
     t.string "name"
-    t.string "item_type"
     t.string "unit"
-    t.boolean "sale_deduction", default: false
+    t.float "item_quantity"
+    t.float "stock"
+    t.boolean "vouched", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "product_inventory_items", force: :cascade do |t|
+    t.string "unit"
+    t.float "unit_count"
+    t.bigint "product_id"
+    t.bigint "inventory_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inventory_item_id"], name: "index_product_inventory_items_on_inventory_item_id"
+    t.index ["product_id", "inventory_item_id"], name: "product_inventory", unique: true
+    t.index ["product_id"], name: "index_product_inventory_items_on_product_id"
+  end
+
+  create_table "product_premade_items", force: :cascade do |t|
+    t.string "unit"
+    t.float "unit_count"
+    t.bigint "product_id"
+    t.bigint "premade_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["premade_item_id"], name: "index_product_premade_items_on_premade_item_id"
+    t.index ["product_id", "premade_item_id"], name: "index_product_premade_items_on_product_id_and_premade_item_id", unique: true
+    t.index ["product_id"], name: "index_product_premade_items_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
+    t.float "price"
+    t.float "min_net"
+    t.boolean "vouched", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -104,4 +147,10 @@ ActiveRecord::Schema.define(version: 2022_09_03_075329) do
   add_foreign_key "branch_premade_items", "premade_items"
   add_foreign_key "branch_products", "branches"
   add_foreign_key "branch_products", "products"
+  add_foreign_key "premade_inventory_items", "inventory_items"
+  add_foreign_key "premade_inventory_items", "premade_items"
+  add_foreign_key "product_inventory_items", "inventory_items"
+  add_foreign_key "product_inventory_items", "products"
+  add_foreign_key "product_premade_items", "premade_items"
+  add_foreign_key "product_premade_items", "products"
 end

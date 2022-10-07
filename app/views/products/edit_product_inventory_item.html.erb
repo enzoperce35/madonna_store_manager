@@ -1,0 +1,22 @@
+<%= link_to parent_view, products_path, method: 'get', class: 'return-link' %>
+<%= 'products' %>
+
+<h3 style="text-align:center"><%= @product_item.product.name %>( <%= @product_item.inventory_item.name %> )</h3><br>
+
+<%= simple_form_for @product_item, url: update_product_item_path( @product_item ), method: 'put' do |f| %>
+
+  <p>
+    <%= f.label edit_product_unit_label_phrase_for( @product_item, @product_item.inventory_item ) %>
+    
+    <div class="input-group">
+      <%= f.input :unit_count, label: false, input_html: { class: "form-control", placeholder: 'Quantity' } %>
+      <%= f.input :unit, label: false, collection: @valid_units, input_html: { class: "form-control", placeholder: 'Unit' } %>
+    </div>
+  </p>
+  
+  <p style="float:right">
+    <%= f.submit "Submit Changes" %>
+  </p>
+<% end %>
+
+<%# input the amount of inventory item needed for a product or a sub-product %>

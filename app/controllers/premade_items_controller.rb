@@ -1,12 +1,13 @@
 class PremadeItemsController < ApplicationController
   def index
-    @items = PremadeItem.all
+    @list = params[ :list ]
+    @premade_items = PremadeItem.all
   end
 
   def new
     @item = PremadeItem.new
-    @types = PremadeItem.all.pluck( :item_type ).uniq
-    @units = PremadeItem.all.pluck( :unit ).uniq
+    @inventory_items = InventoryItem.all
+    @units = helpers.units.keys
   end
 
   def create
@@ -21,27 +22,31 @@ class PremadeItemsController < ApplicationController
 
   def edit
     @item = PremadeItem.find( params[ :id ] )
-    @types = PremadeItem.all.pluck( :item_type ).uniq
-    @units = PremadeItem.all.pluck( :unit ).uniq
+    @inventory_items = InventoryItem.all
+    @valid_units = helpers.find_valid_item_units( @item )
   end
 
   def update
     item = PremadeItem.find( params[ :id ] )
 
     if item.update( item_params )
-      redirect_to premade_items_path, method: 'get', notice: "edit successful"
+      redirect_to premade_item_path( item ), method: 'get', notice: "edit successful"
     else
       redirect_back( fallback_location: premade_items_path, notice: 'edit failed' )
     end
   end
 
   def show
-    @item = PremadeItem.find( params[ :id ] )
+    @premade_item = PremadeItem.find( params[ :id ] )
+    @premade_inventory_items = PremadeInventoryItem.where( premade_item_id: @premade_item.id )
+    @complete_item = params[ :complete_item ]
   end
 
   def destroy
     item = PremadeItem.find( params[ :id ] )
 
+    deny_joined_objects_with_premade( item )
+    
     if item.destroy
       redirect_to premade_items_path, method: 'get', notice: "#{ item.name } has been deleted"
     else
@@ -49,9 +54,35 @@ class PremadeItemsController < ApplicationController
     end
   end
 
+  def edit_premade_inventory_item
+    @premade_inventory_item = PremadeInventoryItem.find( params[ :id ] )
+    
+    @valid_units = helpers.find_valid_item_units( @premade_inventory_item )
+  end
+  
+  def update_premade_inventory_item
+    premade_item = PremadeInventoryItem.find( params[ :id ] )
+
+    if premade_item.update( premade_item_params )
+      redirect_to premade_item_path( premade_item.premade_item, focus: true ), method: 'get', notice: 'edit successful'
+    else
+      redirect_to premade_items_path, method: 'get', notice: "edit failed"
+    end
+  end
+
   private
 
   def item_params
-    params.require( :premade_item ).permit( :name, :item_type, :unit, :sale_deduction )
+    params.require( :premade_item ).permit( :name, :unit, :item_quantity, :stock, :vouched, inventory_item_ids: [] )
+  end
+
+  def premade_item_params
+    params.require( :premade_inventory_item ).permit( :unit, :unit_count )
+  end
+
+  def deny_joined_objects_with_premade( item )
+    products = Product.includes( :premade_items ).where( premade_items: { id: item.id } )
+
+    products.update_all( vouched: false ) unless products.nil?
   end
 end

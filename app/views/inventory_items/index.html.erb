@@ -1,7 +1,1 @@
-<div style="float: right;">
-  <%= link_to 'add inventory item', new_inventory_item_path, method: 'get' %>
-</div>
-
-<% @items.each do | item | %>
-  <%= link_to item.name, inventory_item_path( item ), method: 'get' %><br>
-<% end %>
+<%= render 'table' %>

@@ -1,35 +1,52 @@
-<h3>Add Inventory item</h3><br>
+<%= link_to parent_view, inventory_items_path, method: 'get', class: 'return-link' %>
+<%= 'market items' %>
+
+<h3 style="text-align:center">Add Market item</h3><br>
 
 <%= simple_form_for @item do |f| %>
   <p>
-    <%= f.label 'Item' %>
+    <%= f.label 'Item*' %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>
   </p>
-  
+
   <p>
-    <%= f.label 'Type' %>
-    <%= f.input :item_type, label: false, input_html: { type: 'text', list: 'types', class: 'form-control' } %>
+    <%= f.label 'Price*' %>
+    <div class="input-group">
+      <%= f.input :market_price, label: false, input_html: { class: "form-control", placeholder: 'market price' } %>
+      
+      <span class="input-group-addon"> &nbsp Per &nbsp</span>
+      
+      <%= f.input :item_quantity, label: false, input_html: { class: "form-control", placeholder: 'item quantity' } %>&nbsp&nbsp
+      
+      <%= f.input :unit, as: :select, collection: @units, label: false, input_html: { type: 'text', list: 'units', class: 'form-control', placeholder: 'item unit' } %>
+      
+      <span class="input-group-addon">
+        &nbsp &nbsp
+        <%= link_to list_unicode, unit_chart_path, method: 'get' %>
+        &nbsp &nbsp
+      </span>
+      
+      <%= f.input :unit_note, label: false, input_html: { placeholder: 'unit note', style: 'height: 38px' } %>
+    </div>
+  </p>
+
+  <p>
+  </p>
+
+  <p>
+    <%= f.label 'Type*' %>
+    <%= f.input :item_type, label: false, input_html: { type: 'text', list: 'types', autocomplete: 'off', class: 'form-control' } %>
     <datalist id="types">
       <% @types.each do | type | %>
         <option><%= type %></option>
       <% end %>
     </datalist>
   </p>
-  
-  <p>
-    <%= f.label 'Unit' %>
-    <%= f.input :unit, label: false, input_html: { type: 'text', list: 'units', class: 'form-control' } %>
-    <datalist id="units">
-      <% @units.each do | unit | %>
-        <option><%= unit %></option>
-      <% end %>
-    </datalist>
-  </p>
 
   <p>
-    <%= f.label 'Sale Deducted?' %>
-    <%= f.input :sale_deduction, as: :select, label: false, input_html: { class: "form-control" } %>
-  </p>
+    <%= f.label 'Current Stock' %>
+    <%= f.input :stock, label: false, input_html: { class: "form-control" } %>
+  </p><br>
 
   <p style="float:right">
     <%= f.submit "Add Item" %>

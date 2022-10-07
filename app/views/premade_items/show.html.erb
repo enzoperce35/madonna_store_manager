@@ -1,1 +1,67 @@
-<%= link_to @item.name, edit_premade_item_path( @item ), method: 'get' %>
+<%= link_to parent_view, premade_items_path, method: 'get', class: 'return-link' %>
+<%= 'premade items' %>
+
+<div class="container center">
+  <div>
+    <table class = 'table'>
+
+      <caption id='sub-page-caption'>
+        <h2>
+          <%= link_to @premade_item.name, edit_premade_item_path( @premade_item ), class: compliance_class_of( @premade_item ), method: 'get' %>
+        </h2>
+
+        <h5 style="color: indigo">
+          <%= unit_quantity_of( @premade_item ) + ': '%>
+        </h5>
+
+        <%= capacity_phrase_for( @premade_item ) %>
+        <hr>
+      </caption>
+      
+      <thead>
+        <tr>
+          <th>Item</th>
+          
+          <th>Quantity</th>
+          
+          <th>Cost</th>
+        </tr>
+      </thead>
+      
+      <% @premade_inventory_items.each do | join | %>
+        <% item = join.inventory_item %>
+      
+        <tbody>
+          <tr>
+            <td>
+              <%= link_to item.name, edit_premade_inventory_item_path( join ), class: compliance_class_of( join ), method: 'post' %>
+            </td>
+    
+            <td>
+              <%= join.unit_count %>
+              <%= join.unit %>
+            </td>
+            
+            <td>
+              <%= item_cost( join ) %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<% if @complete_item == 'true' %>
+  <%= simple_form_for @premade_item do |f| %>
+    <% verified = @premade_item.vouched %>
+    
+    <p>
+      <%= f.hidden_field :vouched, value: verified ? false : true %>
+    </p>
+
+    <p style="float:right">
+      <%= f.submit verified ? 'Deny' : 'Vouch' %>
+    </p>
+  <% end %>
+<% end %>

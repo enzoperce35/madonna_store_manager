@@ -1,0 +1,28 @@
+<table class = 'table' style="width: 30%; margin-bottom: 30%;">
+
+  <caption style="text-align: center;">
+    Unit Chart
+    <hr>
+  </caption>
+  
+  <% units.each do | key, values | %>
+  
+    <tbody>
+      <tr style=<%= background_color_for( values ) %>>
+        <td>
+          <%= key %>
+        </td>
+
+        <td style="font-weight: 20;">
+          <%#= values[ 'abbr' ] %>
+        </td>
+
+        <td>
+          <em style="float: right;">
+            <%= values[ 'class' ] %>
+          </em>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

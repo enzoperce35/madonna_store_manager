@@ -1,0 +1,36 @@
+<%= link_to parent_view, products_path, method: 'get', class: 'return-link' %>
+<%= 'products' %>
+
+<h3 style="text-align:center">
+  <%= @product_premade_item.product.name %>( <%= @product_premade_item.premade_item.name %> )
+</h3><br>
+
+<%= simple_form_for @product_premade_item, url: update_product_premade_item_path( @product_premade_item ), method: 'put' do |f| %>
+
+  <p>
+    <%= f.label edit_product_unit_label_phrase_for( @product_premade_item, @product_premade_item.premade_item ) %>
+    
+    <div class="input-group">
+      <%= f.input :unit_count, label: false, input_html: { class: "form-control", placeholder: 'Quantity' } %>
+      <%= f.input :unit, label: false, collection: @valid_units, input_html: { class: "form-control", placeholder: 'Unit' } %>
+    </div>
+  </p>
+  
+  <p style="float:right">
+    <%= f.submit "Submit Changes" %>
+  </p>
+<% end %><br>
+
+<% unless verified_and_complete?( @product_premade_item.premade_item ) %>
+  <p style="color:red; font-style: italic;">
+    *
+    <%= @product_premade_item.product.name %>
+    's premade item
+    ' <%= @product_premade_item.premade_item.name %> '
+    has insufficent data; please review and edit through this
+    <%= link_to 'link', premade_item_path( @product_premade_item.premade_item, complete_item: complete_premade_item_data_values?( @product_premade_item.premade_item ) ), method: 'get' %>
+  </p>
+<% end %>
+
+
+<%#= 'input the amount of premade item needed for a product' %>

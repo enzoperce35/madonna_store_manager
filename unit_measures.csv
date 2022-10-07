@@ -1,0 +1,21 @@
+gallon,volume,gal
+liter,volume,L
+quart,volume,qt
+pint,volume,pt
+cup,volume,cup
+deciliter,volume,dl
+fluid ounce,volume,fl oz
+tablespoon,volume,tbsp
+teaspoon,volume,tsp
+milliliter,volume,ml
+kilogram,weight,kg
+pound,weight,lb
+ounce,weight,oz
+gram,weight,g
+milligram,weight,mg
+meter,length,m
+yard,length,yrd
+inch,length,in
+centimeter,length,cm
+millimeter,length,mm
+piece,numeric,pc

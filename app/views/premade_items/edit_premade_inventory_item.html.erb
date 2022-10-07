@@ -1,0 +1,24 @@
+<%= link_to parent_view, premade_items_path, method: 'get', class: 'return-link' %>
+<%= 'premade items' %>
+
+<h3 style="text-align:center">
+  <%= @premade_inventory_item.premade_item.name %>( <%= @premade_inventory_item.inventory_item.name %> )
+</h3><br>
+
+<%= simple_form_for @premade_inventory_item, url: update_premade_inventory_item_path( @premade_inventory_item ), method: 'put' do |f| %>
+
+  <p>
+    <%= f.label premade_inventory_item_unit_label_phrase_for( @premade_inventory_item ) %>
+    
+    <div class="input-group">
+      <%= f.input :unit_count, label: false, input_html: { class: "form-control", placeholder: 'Quantity' } %>
+      <%= f.input :unit, label: false, collection: @valid_units, input_html: { class: "form-control", placeholder: 'Unit' } %>
+    </div>
+  </p>
+  
+  <p style="float:right">
+    <%= f.submit "Submit Changes" %>
+  </p>
+<% end %>
+
+<%#= input the quantity of an inventory item for a premade item %>

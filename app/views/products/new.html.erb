@@ -1,11 +1,43 @@
-<h3>Add Product</h3>
+<%= link_to parent_view, products_path, method: 'get', class: 'return-link' %>
+<%= 'products' %>
+
+<h3 style='text-align:center'>Add Product</h3>
 
 <%= simple_form_for @product do |f| %>
   <p>
+    <%= f.label "Name*" %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>
+  </p>
+  
+  <p>
+    <%= f.label "Price*" %>
+    <%= f.input :price, label: false, input_html: { class: "form-control" } %>
+  </p>
+  
+  <p>
+    <%= f.label "Minimum Net" %>
+    <%= f.input :min_net, label: false, input_html: { class: "form-control" } %>
+  </p>
+
+  <p>
+    <%= f.label "Components:" %>
+
+    <%= f.collection_check_boxes( :premade_item_ids, @premade_items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
+      <div class="form-check">
+        <%= item.check_box( class: "form-check-input", checked: @product.premade_items.pluck( :name ).include?( item.object.name ) ) %>
+        <%= item.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
+    
+    <%= f.collection_check_boxes( :inventory_item_ids, @items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
+      <div class="form-check">
+        <%= item.check_box( class: "form-check-input", checked: @product.inventory_items.pluck( :name ).include?( item.object.name ) ) %>
+        <%= item.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
   </p>
 
   <p style="float:right">
-    <%= f.submit "Add Product" %>
+    <%= f.submit "Submit" %>
   </p>
 <% end %>

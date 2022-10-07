@@ -1,1 +1,69 @@
-<%= link_to @product.name, edit_product_path( @product ), method: 'get' %>
+<%= link_to parent_view, products_path, method: 'get', class: 'return-link' %>
+<%= 'products' %>
+
+<div class="container center">
+  <div>
+    <table class = 'table'>
+
+      <caption id='sub-page-caption'>
+        <h2>
+          <%= link_to @product.name, edit_product_path( @product ), method: 'get', class: compliance_class_of( @product ) %>
+        </h2>
+        
+        <hr>
+      </caption>
+      
+      <thead>
+        <tr>
+          <th>Item</th>
+          
+          <th>Amount</th>
+          
+          <th>Cost</th>
+        </tr>
+      </thead>
+      
+      <%# list of product components( product_premade_item && product_inventory_item ) %>
+      <% @product_items.each do | join | %>
+        <% item = item_of( join ) %>
+        <% item_class = item.class.name %>
+        
+        <tbody>
+          <tr>
+            <td>
+              <% case item_class %>
+              <% when 'InventoryItem' %>
+                <%= link_to item.name, edit_product_item_path( join ), method: 'post', class: compliance_class_of( join ) %>
+              <% when 'PremadeItem' %>
+                <%= link_to item.name, edit_product_premade_item_path( join ), method: 'post', class: compliance_class_of( join ) %>
+              <% end %>
+            </td>
+    
+            <td>
+              <%= join.unit_count %>
+              <%= join.unit %>
+            </td>
+            
+            <td>
+              <%= cost_of( join ) %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
+    
+<% if @complete_item == 'true' %>
+  <%= simple_form_for @product do |f| %>
+    <% verified = @product.vouched %>
+    
+    <p>
+      <%= f.hidden_field :vouched, value: verified ? false : true %>
+    </p>
+
+    <p style="float:right">
+      <%= f.submit verified ? 'Deny' : 'Vouch' %>
+    </p>
+  <% end %>
+<% end %>

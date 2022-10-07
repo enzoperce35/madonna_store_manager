@@ -1,0 +1,41 @@
+<table class = 'table'>
+
+  <caption id='caption'>
+    Market Items
+    <hr>
+  </caption>
+  
+  <thead>
+    <tr>
+      <th>
+        Item
+        <%= link_to '[ ' "\u{ 002B }" ' ]'.encode( 'utf-8' ), new_inventory_item_path, method: 'get' %>
+      </th>
+      
+      <th>Market Price</th>
+      
+      <th>Stock</th>
+    </tr>
+  </thead>
+  
+  <% @inventory_items.each do | item | %>
+    
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to item.name, edit_inventory_item_path( item ), method: 'get' %>
+        </td>
+
+        <td>
+          <%= market_price_of( item ) %>
+        </td>
+        
+        <td>
+          <%= item_stocks_of( item ) %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+
+<%# table for inventory items with accumulated costs from it's composition( inventory_items ) %>

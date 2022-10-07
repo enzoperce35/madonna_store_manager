@@ -1,0 +1,51 @@
+<table class = 'table'>
+
+  <caption id='caption'>
+    Premade Items
+    <hr>
+  </caption>
+  
+  <thead>
+    <tr>
+      <th>
+        Item
+        <%= link_to '[ ' "\u{ 002B }" ' ]'.encode( 'utf-8' ), new_premade_item_path, method: 'get' %>
+      </th>
+
+      <th>Quantity</th>
+      
+      <th>Cost</th>
+      
+      <th>stock</th>
+    </tr>
+  </thead>
+  
+  <% @premade_items.each do | premade_item | %>
+    
+    <tbody>
+      <tr>
+        <td>
+          <%# go to 'show_view': premade item's composition( inventory items ) %>
+          <%= link_to premade_item.name,
+              premade_item_path( premade_item, complete_item: complete_premade_item_data_values?( premade_item ) ),
+              class: compliance_class_of( premade_item ),
+              method: 'get' %>
+        </td>
+
+        <td>
+          <%= unit_quantity_of( premade_item, true ) %>
+        </td>
+
+        <td>
+          <%= cost_of( premade_item ) %>
+        </td>
+        
+        <td>
+          <%= premade_item.stock %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+
+<%# table for premade items with accumulated costs from it's composition( inventory_items ) %>

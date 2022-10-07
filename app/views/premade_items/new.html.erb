@@ -1,37 +1,44 @@
-<h3>Add Premade item</h3><br>
+<%= link_to parent_view, premade_items_path, method: 'get', class: 'return-link' %>
+<%= 'premade items' %>
+
+<h3 style='text-align:center'>Add Premade Item</h3>
 
 <%= simple_form_for @item do |f| %>
   <p>
-    <%= f.label 'Item' %>
+    <%= f.label "Name*" %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>
   </p>
   
   <p>
-    <%= f.label 'Type' %>
-    <%= f.input :item_type, label: false, input_html: { type: 'text', list: 'types', class: 'form-control' } %>
-    <datalist id="types">
-      <% @types.each do | type | %>
-        <option><%= type %></option>
-      <% end %>
-    </datalist>
+    <%= f.label "Unit*" %>
+    <%= link_to list_unicode, unit_chart_path, method: 'get' %>
+    <div class="input-group">
+      <%= f.input :item_quantity, label: false, input_html: { class: 'form-control', placeholder: 'quantity' } %>
+
+      <span class="input-group-addon"> &nbsp &nbsp</span>
+      
+      <%= f.input :unit, as: :select, collection: @units, label: false, input_html: { class: 'form-control', placeholder: 'item unit' } %> 
+    </div>
   </p>
   
   <p>
-    <%= f.label 'Unit' %>
-    <%= f.input :unit, label: false, input_html: { type: 'text', list: 'units', class: 'form-control' } %>
-    <datalist id="units">
-      <% @units.each do | unit | %>
-        <option><%= unit %></option>
-      <% end %>
-    </datalist>
+    <%= f.label "Stock" %>
+    <%= f.input :stock, label: false, input_html: { class: "form-control" } %>
   </p>
 
   <p>
-    <%= f.label 'Sale Deducted?' %>
-    <%= f.input :sale_deduction, as: :select, label: false, input_html: { class: "form-control" } %>
+    <%= f.label "Components:" %>
+    <%= f.collection_check_boxes( :inventory_item_ids, @inventory_items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
+      <div class="form-check">
+        <%= item.check_box( class: "form-check-input", checked: @item.inventory_items.pluck( :name ).include?( item.object.name ) ) %>
+        <%= item.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
   </p>
 
   <p style="float:right">
-    <%= f.submit "Add Item" %>
+    <%= f.submit "Submit" %>
   </p>
 <% end %>
+
+<%# creates a premade_item with its composition( inventory_items ) %>

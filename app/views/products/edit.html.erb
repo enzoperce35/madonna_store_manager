@@ -1,14 +1,52 @@
-<h3>
-  Edit Product
+<%= link_to parent_view, products_path, method: 'get', class: 'return-link' %>
+<%= 'products' %>
+
+<h3 style="text-align: center;">
+  Product(
+  <%= @product.name %>
+  )
   <%= link_to '[x]', product_path( @product ), method: 'delete', data: { confirm: 'Are you sure you want to delete this ingredient?' } %>
 </h3>
 
-<%= simple_form_for @product do |f| %>
+<%= simple_form_for @product do | f | %>
   <p>
+    <%= f.label "Name*" %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>
   </p>
-
-  <p style="float:right">
-    <%= f.submit "Edit Product" %>
+  
+  <p>
+    <%= f.label "Price*" %>
+    <%= f.input :price, label: false, input_html: { class: "form-control" } %>
   </p>
-<% end %>
+  
+  <p>
+    <%= f.label "Minimum Net" %>
+    <%= f.input :min_net, label: false, input_html: { class: "form-control" } %>
+  </p>
+
+  <p>
+    <%= f.label 'Components:' %>
+    <%= f.collection_check_boxes( :premade_item_ids, @premade_items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
+      <div class="form-check">
+        <%= item.check_box( class: "form-check-input", checked: @product.premade_items.pluck( :name ).include?( item.object.name ), disabled: verified_and_complete?( PremadeItem.find( item.object.id ) ) ? false : true ) %>
+        <%= item.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
+    
+    <%= f.collection_check_boxes( :inventory_item_ids, @items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>
+      <div class="form-check">
+        <%= item.check_box( class: "form-check-input", checked: @product.inventory_items.pluck( :name ).include?( item.object.name ) ) %>
+        <%= item.label( class: "form-check-label" ) %>
+      </div>
+    <% end %>
+  </p>
+
+  <p style="float: right">
+    <%= f.label 'Vouch' %>
+    <%= f.check_box :vouched %>
+    
+    &nbsp&nbsp&nbsp&nbsp
+    
+    <%= f.submit "Update Product" %>
+  </p>
+<% end %><br><br>
