@@ -1,5 +1,5 @@
 class PremadeItem < ApplicationRecord
-  validates_presence_of :name, :unit, :item_quantity, on: [ :create, :update ]
+  validates_presence_of :name, :unit, :item_type, :item_quantity, on: [ :create, :update ]
   validates_uniqueness_of :name, on: [ :create, :update ]
   
   has_many :branch_premade_items, dependent: :destroy

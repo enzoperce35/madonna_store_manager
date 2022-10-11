@@ -1,10 +1,9 @@
 class CreateBranchInventories < ActiveRecord::Migration[6.1]
   def change
     create_table :branch_inventories do |t|
-      t.datetime :opening_inventory
-      t.float :inventory_stock, default: 0
-      t.belongs_to :branch, null: true, foreign_key: true
-      t.belongs_to :inventory_item, null: true, foreign_key: true
+      t.float       :stock, default: 0
+      t.belongs_to  :branch, null: true, foreign_key: true
+      t.belongs_to  :inventory_item, null: true, foreign_key: true
       
       t.timestamps
     end

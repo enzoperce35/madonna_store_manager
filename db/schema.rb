@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_14_222130) do
+ActiveRecord::Schema.define(version: 2022_10_10_051800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "branch_inventories", force: :cascade do |t|
-    t.datetime "opening_inventory"
-    t.float "inventory_stock", default: 0.0
+    t.float "stock", default: 0.0
     t.bigint "branch_id"
     t.bigint "inventory_item_id"
     t.datetime "created_at", precision: 6, null: false
@@ -28,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
   end
 
   create_table "branch_premade_items", force: :cascade do |t|
-    t.float "unit_count"
+    t.float "stock", default: 0.0
     t.bigint "branch_id"
     t.bigint "premade_item_id"
     t.datetime "created_at", precision: 6, null: false
@@ -39,10 +38,10 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
   end
 
   create_table "branch_products", force: :cascade do |t|
-    t.bigint "branch_id"
-    t.bigint "product_id"
     t.string "category"
     t.float "price"
+    t.bigint "branch_id"
+    t.bigint "product_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["branch_id", "product_id"], name: "index_branch_products_on_branch_id_and_product_id", unique: true
@@ -50,16 +49,19 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
     t.index ["product_id"], name: "index_branch_products_on_product_id"
   end
 
+  create_table "branch_users", force: :cascade do |t|
+    t.bigint "branch_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["branch_id"], name: "index_branch_users_on_branch_id"
+    t.index ["user_id"], name: "index_branch_users_on_user_id"
+  end
+
   create_table "branches", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "branches_users", id: false, force: :cascade do |t|
-    t.bigint "branch_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["branch_id", "user_id"], name: "index_branches_users_on_branch_id_and_user_id", unique: true
   end
 
   create_table "inventory_items", force: :cascade do |t|
@@ -69,7 +71,6 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
     t.string "unit"
     t.text "unit_note"
     t.float "market_price"
-    t.float "stock"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -89,8 +90,8 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
   create_table "premade_items", force: :cascade do |t|
     t.string "name"
     t.string "unit"
+    t.string "item_type"
     t.float "item_quantity"
-    t.float "stock"
     t.boolean "vouched", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -124,6 +125,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
     t.string "name"
     t.float "price"
     t.float "min_net"
+    t.boolean "add_on", default: false
     t.boolean "vouched", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -147,6 +149,8 @@ ActiveRecord::Schema.define(version: 2022_09_14_222130) do
   add_foreign_key "branch_premade_items", "premade_items"
   add_foreign_key "branch_products", "branches"
   add_foreign_key "branch_products", "products"
+  add_foreign_key "branch_users", "branches"
+  add_foreign_key "branch_users", "users"
   add_foreign_key "premade_inventory_items", "inventory_items"
   add_foreign_key "premade_inventory_items", "premade_items"
   add_foreign_key "product_inventory_items", "inventory_items"

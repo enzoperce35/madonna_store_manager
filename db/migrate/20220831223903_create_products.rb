@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.string   :name
       t.float    :price
       t.float    :min_net
+      t.boolean  :add_on, default: false
       t.boolean  :vouched, default: false
 
       t.timestamps

@@ -7,7 +7,6 @@ class CreateInventoryItems < ActiveRecord::Migration[6.1]
       t.string   :unit
       t.text     :unit_note
       t.float    :market_price
-      t.float    :stock
       
       t.timestamps
     end

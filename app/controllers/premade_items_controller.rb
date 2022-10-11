@@ -8,6 +8,7 @@ class PremadeItemsController < ApplicationController
     @item = PremadeItem.new
     @inventory_items = InventoryItem.all
     @units = helpers.units.keys
+    @types = PremadeItem.all.pluck( :item_type ).uniq
   end
 
   def create
@@ -24,6 +25,7 @@ class PremadeItemsController < ApplicationController
     @item = PremadeItem.find( params[ :id ] )
     @inventory_items = InventoryItem.all
     @valid_units = helpers.find_valid_item_units( @item )
+    @types = PremadeItem.all.pluck( :item_type ).uniq
   end
 
   def update
@@ -73,7 +75,7 @@ class PremadeItemsController < ApplicationController
   private
 
   def item_params
-    params.require( :premade_item ).permit( :name, :unit, :item_quantity, :stock, :vouched, inventory_item_ids: [] )
+    params.require( :premade_item ).permit( :name, :unit, :item_quantity, :item_type, :vouched, inventory_item_ids: [] )
   end
 
   def premade_item_params

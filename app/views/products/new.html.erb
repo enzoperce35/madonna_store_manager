@@ -4,6 +4,10 @@
 <h3 style='text-align:center'>Add Product</h3>
 
 <%= simple_form_for @product do |f| %>
+  <div style="float: right">
+    <%= f.input :add_on, inline_label: true %>
+  </div><br>
+  
   <p>
     <%= f.label "Name*" %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>
@@ -17,7 +21,7 @@
   <p>
     <%= f.label "Minimum Net" %>
     <%= f.input :min_net, label: false, input_html: { class: "form-control" } %>
-  </p>
+  </p><br>
 
   <p>
     <%= f.label "Components:" %>
@@ -37,7 +41,7 @@
     <% end %>
   </p>
 
-  <p style="float:right">
+  <p style="float: right">
     <%= f.submit "Submit" %>
   </p>
 <% end %>

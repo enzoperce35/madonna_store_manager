@@ -1,9 +1,9 @@
 class CreateBranchPremadeItems < ActiveRecord::Migration[6.1]
   def change
     create_table :branch_premade_items do |t|
-      t.float :unit_count
-      t.belongs_to :branch, null: true, foreign_key: true
-      t.belongs_to :premade_item, null: true, foreign_key: true
+      t.float       :stock, default: 0
+      t.belongs_to  :branch, null: true, foreign_key: true
+      t.belongs_to  :premade_item, null: true, foreign_key: true
 
       t.timestamps
     end

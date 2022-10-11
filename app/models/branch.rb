@@ -1,6 +1,4 @@
 class Branch < ApplicationRecord
-  has_and_belongs_to_many :users
-  
   has_many :branch_products, dependent: :destroy
   has_many :products, through: :branch_products
 
@@ -9,4 +7,7 @@ class Branch < ApplicationRecord
 
   has_many :branch_premade_items, dependent: :destroy
   has_many :premade_items, through: :branch_premade_items
+  
+  has_many :branch_users, dependent: :destroy
+  has_many :users, through: :branch_users
 end

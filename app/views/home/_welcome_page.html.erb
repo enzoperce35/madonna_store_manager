@@ -1,14 +1,9 @@
 <h3>welcome '<%= @user.username %>'</h3><br>
 
-<%= form_for :user, url: user_branch_path( @user ), method: 'post' do |f| %>
+<%= simple_form_for :branch_user, url: user_branch_path( @user ), method: 'post' do |f| %>
   <%= f.label 'Please select your administrative branch' %><br>
   
-  <%= f.collection_check_boxes( :branch_ids, Branch.all.order( :name ), :id, :name ) do |  branch | %>
-    <div class="form-check">
-      <%= branch.check_box( class: "form-check-input" ) %>
-      <%= branch.label( class: "form-check-label" ) %>
-    </div>
-  <% end %><br>
+  <%= f.collection_radio_buttons :branch_id, Branch.all, :id, :name, :item_wrapper_class => 'checkbox_container' %><br>
   
   <%= f.submit 'Save' %>
 <% end %>

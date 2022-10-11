@@ -60,7 +60,7 @@ class InventoryItemsController < ApplicationController
   private
 
   def item_params
-    params.require( :inventory_item ).permit( :name, :item_type, :item_quantity, :unit, :unit_note, :market_price, :stock )
+    params.require( :inventory_item ).permit( :name, :item_type, :item_quantity, :unit, :unit_note, :market_price )
   end
 
   def deny_joined_objects_with_inventory( item )

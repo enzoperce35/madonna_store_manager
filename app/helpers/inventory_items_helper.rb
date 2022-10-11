@@ -13,13 +13,6 @@ module InventoryItemsHelper
 
 
 
-
-  
-  def item_stocks_of( inventory_item)
-    return nil if inventory_item.stock.nil?
-    
-    "#{ humanize( inventory_item.stock )} #{ abbr_unit_of( inventory_item.unit ) }"
-  end
   
   def market_price_of( inventory_item )
     "#{ humanize( inventory_item.market_price, true ) } / 

@@ -25,9 +25,14 @@
   </p>
   
   <p>
-    <%= f.label "Stock" %>
-    <%= f.input :stock, label: false, input_html: { class: "form-control" } %>
-  </p>
+    <%= f.label 'Type*' %>
+    <%= f.input :item_type, label: false, input_html: { type: 'text', list: 'types', autocomplete: 'off', class: 'form-control' } %>
+    <datalist id="types">
+      <% @types.each do | type | %>
+        <option><%= type %></option>
+      <% end %>
+    </datalist>
+  </p><br>
 
   <p>
     <%= f.label "Components:" %>

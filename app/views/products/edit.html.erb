@@ -9,6 +9,11 @@
 </h3>
 
 <%= simple_form_for @product do | f | %>
+
+  <div style="float: right">
+    <%= f.input :add_on, inline_label: true %>
+  </div><br>
+  
   <p>
     <%= f.label "Name*" %>
     <%= f.input :name, label: false, input_html: { class: "form-control" } %>

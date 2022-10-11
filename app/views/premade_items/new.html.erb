@@ -22,10 +22,15 @@
   </p>
   
   <p>
-    <%= f.label "Stock" %>
-    <%= f.input :stock, label: false, input_html: { class: "form-control" } %>
-  </p>
-
+    <%= f.label 'Type*' %>
+    <%= f.input :item_type, label: false, input_html: { type: 'text', list: 'types', autocomplete: 'off', class: 'form-control', value: 'Ingredient' } %>
+    <datalist id="types">
+      <% @types.each do | type | %>
+        <option><%= type %></option>
+      <% end %>
+    </datalist>
+  </p><br>
+  
   <p>
     <%= f.label "Components:" %>
     <%= f.collection_check_boxes( :inventory_item_ids, @inventory_items, :id, :name, :item_wrapper_class => 'checkbox_container' ) do | item | %>

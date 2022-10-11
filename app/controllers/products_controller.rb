@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   def index
-    @list = params[ :list ]
     @products = Product.all
   end
 
@@ -91,7 +90,7 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require( :product ).permit( :name, :price, :min_net, :vouched, inventory_item_ids: [], premade_item_ids: [] )
+    params.require( :product ).permit( :name, :price, :min_net, :add_on, :vouched, inventory_item_ids: [], premade_item_ids: [] )
   end
   
   def product_item_params
