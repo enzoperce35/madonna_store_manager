@@ -36,11 +36,15 @@ module ApplicationHelper
     verified_and_complete?( object ) ? 'comp-obj' : 'incomp-obj'
   end
 
-  
-  
-  
-  
-  
-  
-  
+  def user_branch
+    return '' if !user_signed_in? || current_user.branch.nil?
+
+    if user_is_store_manager
+      ' - ' + current_user.branch.name
+    elsif user_is_general_manager
+      ' - ' + 'Admin'
+    else
+      ''
+    end
+  end
 end

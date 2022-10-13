@@ -1,0 +1,14 @@
+<% index = 0 %>
+
+<%= form_tag update_individual_branch_premade_items_path, :method => :put do %>  
+  <% for branch_premade_item in @branch_premade_items %>  
+    <%= fields_for "branch_premade_items[]", branch_premade_item do |f| %>  
+      
+      <%= render "fields", f: f, index: index += 1, item: branch_premade_item.premade_item %>
+    <% end %>  
+  <% end %><br>
+  
+  <p style="float:right">
+    <%= submit_tag "Submit" %>
+  </p>  
+<% end %>  

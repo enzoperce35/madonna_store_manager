@@ -1,5 +1,6 @@
 module GridValues::GridValueHelper
   include GridValues::UnitQuantity
+  include GridValues::UnitStock
 
   def abbr_unit_of( unit )
     units[ unit ][ 'abbr' ]

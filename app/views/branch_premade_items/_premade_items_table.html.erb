@@ -1,22 +1,29 @@
-<table class = 'table'>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="<%= branch_inventories_path %>" data-method = 'get' >Market Items</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="#!">Premade Items</a>
+  </li>
+</ul>
 
-  <caption id='caption'>
-    <%= @branch.name %> Premade Items
-    <hr>
-  </caption>
+<table class = 'table'>
   
   <thead>
     <tr>
       <th>
         Items
-        <%= link_to "\u{ 1D11A }".encode( 'utf-8' ), branch_premade_items_path( list: true ), method: 'get' %>
+        <%= link_to '[+]', branch_premade_items_path( list: true ), method: 'get' %>
       </th>
       
-      <th>Stock</th>
+      <th>
+        Stock
+        <%= link_to pen_edit_unicode, edit_individual_branch_premade_items_path, method: 'post' %>
+      </th>
     </tr>
   </thead>
   
-  <% @branch_items.each do | join | %>
+  <% @branch_premade_items.each do | join | %>
     <% item = PremadeItem.find( join.premade_item_id ) %>
   
     <tbody>
@@ -26,7 +33,7 @@
         </td>
 
         <td>
-          <%= join.unit_count %>
+          <%= inventory_stock_of( join, true ) %>
         </td>
       </tr>
     </tbody>

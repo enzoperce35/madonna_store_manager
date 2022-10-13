@@ -1,0 +1,12 @@
+<% bg = 'background-color:' + ( index.odd? ? 'darkgrey' : 'chocolate' ) %>
+
+<div class="parent-container d-flex" style=<%= bg %>>
+  <div class="container">
+    <%= f.label item.name %>
+  </div>
+
+  <div class="container">
+     <%= f.number_field :stock, step: :any %>
+     <%= item.unit %>
+  </div>
+</div>

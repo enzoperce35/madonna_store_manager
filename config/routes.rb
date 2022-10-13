@@ -16,6 +16,12 @@ Rails.application.routes.draw do
   post 'premade_items/edit_premade_inventory_item/:id', to: 'premade_items#edit_premade_inventory_item', as: 'edit_premade_inventory_item'
   put 'premade_items/update_premade_inventory_item/:id', to: 'premade_items#update_premade_inventory_item', as: 'update_premade_inventory_item'
 
+  post 'branch_inventories/edit_individual_branch_inventory_items', to: 'branch_inventories#edit_individual_branch_inventory_items', as: 'edit_individual_branch_inventory_items'
+  put 'branch_inventories/update_individual_branch_inventory_items', to: 'branch_inventories#update_individual_branch_inventory_items', as: 'update_individual_branch_inventory_items'
+  
+  post 'branch_premade_items/edit_individual_branch_premade_items', to: 'branch_premade_items#edit_individual_branch_premade_items', as: 'edit_individual_branch_premade_items'
+  put 'branch_premade_items/update_individual_branch_premade_items', to: 'branch_premade_items#update_individual_branch_premade_items', as: 'update_individual_branch_premade_items'
+  
   get 'home/unit_chart', as: 'unit_chart'
 
   resources :products, :inventory_items, :premade_items

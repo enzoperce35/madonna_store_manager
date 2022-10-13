@@ -1,0 +1,14 @@
+<% index = 0 %>
+
+<%= form_tag update_individual_branch_inventory_items_path, :method => :put do %>  
+  <% for branch_inventory in @branch_inventories %>  
+    <%= fields_for "branch_inventories[]", branch_inventory do |f| %>  
+      
+      <%= render "fields", f: f, index: index += 1, item: branch_inventory.inventory_item %>
+    <% end %>  
+  <% end %> <br>
+  
+  <p style="float:right">
+    <%= submit_tag "Submit" %>
+  </p>  
+<% end %>  

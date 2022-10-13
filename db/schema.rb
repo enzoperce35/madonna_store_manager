@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_051800) do
 
   create_table "branch_inventories", force: :cascade do |t|
     t.float "stock", default: 0.0
+    t.float "margin", default: 0.0
     t.bigint "branch_id"
     t.bigint "inventory_item_id"
     t.datetime "created_at", precision: 6, null: false
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_051800) do
 
   create_table "branch_premade_items", force: :cascade do |t|
     t.float "stock", default: 0.0
+    t.float "margin", default: 0.0
     t.bigint "branch_id"
     t.bigint "premade_item_id"
     t.datetime "created_at", precision: 6, null: false

@@ -1,12 +1,21 @@
-<h3>
+<h3 style="text-align: center;">
   Edit <%= @branch_item.premade_item.name %>
 </h3>
 
 <%= simple_form_for @branch_item do |f| %>
-  <p>
-    <%= f.label 'Stock' %>
-    <%= f.input :unit_count, label: false, input_html: { class: "form-control" } %>
-  </p>
+  <%= f.label 'Stock' %>
+  <div class="input-group">
+    <%= f.input :stock, label: false, input_html: { class: "form-control" } %>&nbsp
+    
+    <%= @branch_item.premade_item.unit %>
+  </div><br>
+  
+  <%= f.label 'Margin' %>
+  <div class="input-group">
+    <%= f.input :margin, label: false, input_html: { class: "form-control" } %>&nbsp
+
+    <%= @branch_item.premade_item.unit %>
+  </div>
 
   <p style="float:right">
     <%= f.submit "Submit" %>
