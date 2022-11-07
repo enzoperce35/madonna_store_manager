@@ -1,0 +1,44 @@
+<%= simple_form_for( @transfer ) do |f| %>
+  <%= f.error_notification %>
+  
+  <div>
+    <%= f.input :note, label: false, input_html: { class: 'form-control ', style:'width: 30%; height: 20px' }, placeholder: 'Add note here...'%>
+  </div>
+  
+  <table class='table'>
+    
+    <caption id='caption'>
+      Transfer Market Items to
+      <%= branch_name_of( @transfer_branch ) %>
+      <hr>
+    </caption>
+    
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    
+    <tbody class='fields'>
+      <%= f.simple_fields_for :inventory_item_transfers do | builder | %>
+        <%= render 'inventory_item_transfer', identifier: 8417290001825, f: builder %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="form-actions">
+    <div id="new_item" style="float: left;">
+      <%= link_to_add_row( 'Add Item', f, :inventory_item_transfers, class: 'btn btn-primary') %>
+
+    </div>
+    
+    <div style="float: right;">
+      <%= f.button( :submit, class: 'btn btn-primary btn-success', data: { confirm: "Are you sure you want to send these items to #{ branch_name_of( @transfer_branch ) }"}) %>
+    </div>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'inventory_item_transfer', 'data-turbolinks-track' => false %>

@@ -24,6 +24,6 @@ Rails.application.routes.draw do
   
   get 'home/unit_chart', as: 'unit_chart'
 
-  resources :products, :inventory_items, :premade_items
+  resources :products, :inventory_items, :premade_items, :transfers
   resources :branch_products, :branch_inventories, :branch_premade_items, only: [ :index, :edit, :update ]
 end

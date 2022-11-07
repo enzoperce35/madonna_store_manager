@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_051800) do
+ActiveRecord::Schema.define(version: 2022_10_13_221949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,16 @@ ActiveRecord::Schema.define(version: 2022_10_10_051800) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "inventory_item_transfers", force: :cascade do |t|
+    t.float "quantity"
+    t.bigint "transfer_id"
+    t.bigint "inventory_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["inventory_item_id"], name: "index_inventory_item_transfers_on_inventory_item_id"
+    t.index ["transfer_id"], name: "index_inventory_item_transfers_on_transfer_id"
   end
 
   create_table "inventory_items", force: :cascade do |t|
@@ -133,6 +143,15 @@ ActiveRecord::Schema.define(version: 2022_10_10_051800) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "transfers", force: :cascade do |t|
+    t.boolean "recieved", default: false
+    t.text "note"
+    t.integer "sender"
+    t.integer "recipient"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -153,6 +172,8 @@ ActiveRecord::Schema.define(version: 2022_10_10_051800) do
   add_foreign_key "branch_products", "products"
   add_foreign_key "branch_users", "branches"
   add_foreign_key "branch_users", "users"
+  add_foreign_key "inventory_item_transfers", "inventory_items"
+  add_foreign_key "inventory_item_transfers", "transfers"
   add_foreign_key "premade_inventory_items", "inventory_items"
   add_foreign_key "premade_inventory_items", "premade_items"
   add_foreign_key "product_inventory_items", "inventory_items"
