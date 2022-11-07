@@ -1,11 +1,4 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="<%= branch_inventories_path %>" data-method = 'get' >Market Items</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="#!">Premade Items</a>
-  </li>
-</ul>
+<%= render 'nav_tabs' %>
 
 <table class = 'table'>
   
@@ -29,7 +22,7 @@
     <tbody>
       <tr>
         <td>
-          <%= link_to item.name, edit_branch_premade_item_path( join ), method: 'get' %>
+          <%= link_to item.name, edit_branch_premade_item_path( join ), class: compliance_class_of( item ), method: 'get' %>
         </td>
 
         <td>

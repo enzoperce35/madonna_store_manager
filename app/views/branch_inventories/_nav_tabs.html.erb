@@ -1,0 +1,47 @@
+<ul class="nav nav-tabs">
+
+  <li class="nav-item">
+    <a class="nav-link active" href="#!">Market Items</a>
+  </li>
+  
+  <li class="nav-item">
+    <a class="nav-link" href="<%= branch_premade_items_path %>" data-method = 'get' >Premade Items</a>
+  </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+       Action
+    </a>
+    
+    <div class="dropdown-menu">
+      <div class="dropdown-item" id="trans-market-item" >Transfer</div>
+      <a class="dropdown-item" href="#!">PullOut</a>
+      <a class="dropdown-item" href="#!">Recieve</a>
+    </div>
+  </li>
+  
+  <%# pops out only when 'Transfer' action is clicked %>
+  <li class="nav-item dropdown" id="trans-market-item-menu" hidden='true'>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+       Transfer To
+    </a>
+    
+    <div class="dropdown-menu">
+      <% menu_branches = Branch.where.not( name: current_user.branch.name ) %>
+      
+      <% menu_branches.each do | branch | %>
+        <a class="dropdown-item" href=<%= new_transfer_path( branch_id: branch.id ) %> data-method = 'get'>
+          <%= branch_name_of( branch ) %>
+        </a>
+      <% end %>
+    </div>
+  </li>
+</ul>
+
+<script>
+  document.getElementById( "trans-market-item" ).addEventListener( 'click', function()  {
+    document.getElementById( "trans-market-item-menu" ).hidden = false
+  })
+</script>
