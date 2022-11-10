@@ -13,6 +13,9 @@ class InventoryItem < ApplicationRecord
 
   has_many :inventory_item_transfers
   has_many :transfers, through: :inventory_item_transfers, dependent: :destroy
+  
+  has_many :premade_item_transfers
+  has_many :transfers, through: :premade_item_transfers, dependent: :destroy
 
   before_validation do | item |
     item.name = item.name.downcase.capitalize

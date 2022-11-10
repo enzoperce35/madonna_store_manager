@@ -13,13 +13,14 @@ $('#add-item').on('click', () => {
 });
 
 // upon user item selection:
-$('body').on('select2:select', '.content-search', function() {
-  var input_id = 'quant-' + (this.id).toString()
-  var unit_id  = 'unit-' + (this.id).toString()
+$('body').on('select2:select', '.content-search', function(e) {
+  var input_id   = 'quant-' + (this.id).toString()
+  var unit_id    = 'unit-' + (this.id).toString()
+  var item_class = this.dataset[ 'itemClass']
   
-  // perform ajax call on 'show' controller action to get the user input data
+  // perform ajax call on transfer_controller to get the user input data
   $.ajax({
-    url: "/transfers/" + (this.value).toString(),
+    url: "/transfers/selected_item_unit/" + (this.value).toString() + "?item_class=" + item_class,
     method: 'GET',
     dataType: 'json',
     success: function( data ){

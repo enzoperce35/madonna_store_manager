@@ -32,7 +32,7 @@
       <% menu_branches = Branch.where.not( name: current_user.branch.name ) %>
       
       <% menu_branches.each do | branch | %>
-        <a class="dropdown-item" href=<%= new_transfer_path( branch_id: branch.id ) %> data-method = 'get'>
+        <a class="dropdown-item" href=<%= new_transfer_path( item_class: 'market items', branch_id: branch.id ) %> data-method = 'get'>
           <%= branch_name_of( branch ) %>
         </a>
       <% end %>

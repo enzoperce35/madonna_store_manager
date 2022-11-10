@@ -1,5 +1,7 @@
 <%= simple_form_for( @transfer ) do |f| %>
   <%= f.error_notification %>
+
+  <%= hidden_field_tag( :item_class, @item_class ) %>
   
   <div>
     <%= f.input :note, label: false, input_html: { class: 'form-control ', style:'width: 30%; height: 20px' }, placeholder: 'Add note here...'%>
@@ -8,7 +10,9 @@
   <table class='table'>
     
     <caption id='caption'>
-      Transfer Market Items to
+      Transfer
+      <%= @item_class.titleize %>
+      to
       <%= branch_name_of( @transfer_branch ) %>
       <hr>
     </caption>
@@ -23,16 +27,13 @@
     </thead>
     
     <tbody class='fields'>
-      <%= f.simple_fields_for :inventory_item_transfers do | builder | %>
-        <%= render 'inventory_item_transfer', identifier: 8417290001825, f: builder %>
-      <% end %>
+      <%= add_row( f, @item_class ) %>
     </tbody>
   </table>
 
   <div class="form-actions">
     <div id="new_item" style="float: left;">
-      <%= link_to_add_row( 'Add Item', f, :inventory_item_transfers, class: 'btn btn-primary') %>
-
+      <%= link_to_add_row( 'Add Item', f, @item_class, class: 'btn btn-primary') %>
     </div>
     
     <div style="float: right;">
@@ -41,4 +42,4 @@
   </div>
 <% end %>
 
-<%= javascript_include_tag 'inventory_item_transfer', 'data-turbolinks-track' => false %>
+<%= javascript_include_tag 'item_transfer', 'data-turbolinks-track' => false %>

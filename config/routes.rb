@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   put 'branch_premade_items/update_individual_branch_premade_items', to: 'branch_premade_items#update_individual_branch_premade_items', as: 'update_individual_branch_premade_items'
   
   get 'home/unit_chart', as: 'unit_chart'
+  get 'transfers/selected_item_unit/:id', to: 'transfers#selected_item_unit'
 
   resources :products, :inventory_items, :premade_items, :transfers
   resources :branch_products, :branch_inventories, :branch_premade_items, only: [ :index, :edit, :update ]

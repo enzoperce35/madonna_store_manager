@@ -5,12 +5,12 @@
   </td>
   
   <td style="width:72%; padding-right:50px">
-    <%#= f.collection_select(:inventory_item_id, InventoryItem.all, :id, :name, { include_blank: true }, class: "content-search", id: item_id ) %>
-    <%= f.input :inventory_item_id,
+    <%#= f.collection_select(:premade_item_id, premadeItem.all, :id, :name, { include_blank: true }, class: "content-search", id: item_id ) %>
+    <%= f.input :premade_item_id,
                 label: false,
                 as: :grouped_select,
                 collection: type_groupings_of( @items ),
-                input_html: {id: identifier, class: 'content-search', style: 'width:100%', data: { item_class: @item_class } }, #adding unique id allows multiple select2 with one class
+                input_html: {id: identifier, class: 'content-search', style: 'width:100%', data: { item_class: @item_class }}, #adding unique id allows multiple select2 with one class
                 group_method: :last %><br>
   </td>
 

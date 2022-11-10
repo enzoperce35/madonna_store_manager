@@ -8,27 +8,6 @@ module ApplicationHelper
     BranchProduct.exists?( product_id: product.id, branch_id: branch.id )
   end
   
-  def price_of?( branch, product )  # inactive: to be used for unque branch pricing
-    product = BranchProduct.find_by( product_id: product.id, branch_id: branch.id )
-
-    product.nil? ? 'NA' : product.price
-  end
-
-  def prices_of( product, prices = {} )  # inactive: to be used for unique branch pricing
-    branches = Branch.all
-
-    branches.each do | branch |
-      price = price_of?( branch, product )
-
-      prices.store( branch.name, price )
-    end
-
-    prices
-  end
-
-  
-
-
   def type_groupings_of( records, arr = [])
     item_types = records.pluck( :item_type )
 
@@ -41,12 +20,38 @@ module ApplicationHelper
     arr
   end
 
-  def link_to_add_row( name, f, association, **args )
+  def add_row( f, item_class )
+    association = 
+    case item_class
+    when 'market items'
+      :inventory_item_transfers
+    when 'premade items'
+      :premade_item_transfers
+    end
+    
+    f.simple_fields_for association do | builder |
+      render( association.to_s.singularize, identifier: 8417290001825, f: builder )
+    end
+  end
+
+  def item_association( item_class )
+    case item_class
+    when 'market items'
+      :inventory_item_transfers
+    when 'premade items'
+      :premade_item_transfers
+    end
+  end
+  
+  def link_to_add_row( name, f, item_class, **args )
+    association = item_association( item_class )
     new_object = f.object.send( association ).klass.new
     id = new_object.object_id
+    
     fields = f.simple_fields_for( association, new_object, child_index: id ) do |builder|
       render( association.to_s.singularize, identifier: id, f: builder )
     end
+    
     link_to(name, '#', class: "add_fields " + args[:class], id: 'add-item', data: {id: id, fields: fields.gsub("\n", "")})
   end
 

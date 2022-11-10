@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_221949) do
+ActiveRecord::Schema.define(version: 2022_11_08_063601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,16 @@ ActiveRecord::Schema.define(version: 2022_10_13_221949) do
     t.index ["premade_item_id"], name: "index_premade_inventory_items_on_premade_item_id"
   end
 
+  create_table "premade_item_transfers", force: :cascade do |t|
+    t.float "quantity"
+    t.bigint "transfer_id"
+    t.bigint "premade_item_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["premade_item_id"], name: "index_premade_item_transfers_on_premade_item_id"
+    t.index ["transfer_id"], name: "index_premade_item_transfers_on_transfer_id"
+  end
+
   create_table "premade_items", force: :cascade do |t|
     t.string "name"
     t.string "unit"
@@ -176,6 +186,8 @@ ActiveRecord::Schema.define(version: 2022_10_13_221949) do
   add_foreign_key "inventory_item_transfers", "transfers"
   add_foreign_key "premade_inventory_items", "inventory_items"
   add_foreign_key "premade_inventory_items", "premade_items"
+  add_foreign_key "premade_item_transfers", "premade_items"
+  add_foreign_key "premade_item_transfers", "transfers"
   add_foreign_key "product_inventory_items", "inventory_items"
   add_foreign_key "product_inventory_items", "products"
   add_foreign_key "product_premade_items", "premade_items"

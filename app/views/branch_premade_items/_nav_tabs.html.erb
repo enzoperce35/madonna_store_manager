@@ -15,9 +15,33 @@
     </a>
     
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="#!">Deliver</a>
+        <a class="dropdown-item" id ="trans-premade-item">Transfer</a>
         <a class="dropdown-item" href="#!">PullOut</a>
         <a class="dropdown-item" href="#!">Recieve</a>
     </div>
   </li>
+
+  <%# pops out only when 'Transfer' action is clicked %>
+  <li class="nav-item dropdown" id="trans-premade-item-menu" hidden='true'>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown"
+       href="#" role="button" aria-haspopup="true" aria-expanded="false">
+       Transfer To
+    </a>
+    
+    <div class="dropdown-menu">
+      <% menu_branches = Branch.where.not( name: current_user.branch.name ) %>
+      
+      <% menu_branches.each do | branch | %>
+        <a class="dropdown-item" href=<%= new_transfer_path( item_class: 'premade items',branch_id: branch.id ) %> data-method = 'get'>
+          <%= branch_name_of( branch ) %>
+        </a>
+      <% end %>
+    </div>
+  </li>
 </ul>
+
+<script>
+  document.getElementById( "trans-premade-item" ).addEventListener( 'click', function()  {
+    document.getElementById( "trans-premade-item-menu" ).hidden = false
+  })
+</script>
